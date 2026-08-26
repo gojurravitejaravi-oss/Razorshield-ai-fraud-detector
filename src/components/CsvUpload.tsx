@@ -1,7 +1,7 @@
 import { Loader2, UploadCloud, Table2, Download } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { checkAbuseRing, classifyRow, type AbuseRing, type RiskResult } from '@/lib/fraud';
-import { supabase, type TransactionRow } from '@/lib/supabase';
+import { supabase, dbEnabled, type TransactionRow } from '@/lib/supabase';
 import { toast } from '@/lib/toast';
 
 export type FlaggedRow = {
@@ -106,8 +106,14 @@ export function CsvUpload({ onUploaded }: { onUploaded: (rows: FlaggedRow[]) => 
         ip: f.ip, email: f.email, amount: f.amount, message: f.message,
         url: f.url, risk_score: f.risk_score, is_fraud: f.is_fraud, reasons: f.reasons,
       }));
-      const { error } = await supabase.from('transactions').insert(insertRows);
-      if (error) throw error;
+      if (dbEnabled) {
+        try {
+          const { error } = await supabase.from('transactions').insert(insertRows);
+          if (error) throw error;
+        } catch (err) {
+          console.error(err);
+        }
+      }
 
       setRows(flagged);
       onUploaded(flagged);

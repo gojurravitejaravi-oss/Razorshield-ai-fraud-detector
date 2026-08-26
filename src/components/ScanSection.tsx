@@ -1,7 +1,7 @@
 import { Loader2, ShieldCheck, ScanLine } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { calculateRiskScore, extractUrl, vectorize, type RiskResult } from '@/lib/fraud';
-import { supabase, type ScanRow } from '@/lib/supabase';
+import { supabase, dbEnabled, type ScanRow } from '@/lib/supabase';
 import { toast } from '@/lib/toast';
 
 const EXAMPLE = 'Congratulations! You WON lottery FREE cash prize click bit.ly/free-cash-99';
@@ -55,13 +55,18 @@ export function ScanSection({ onSaved }: { onSaved: () => void }) {
         reasons: res.reasons.map((r) => `[${r.rule}] ${r.detail}`),
         tag: res.tag,
       };
-      const { error } = await supabase.from('scans').insert(row);
-      if (error) throw error;
-      setSavedRow(row);
+      if (dbEnabled) {
+        try {
+          const { error } = await supabase.from('scans').insert(row);
+          if (error) throw error;
+          setSavedRow(row);
+        } catch (err) {
+          console.error(err);
+        }
+      }
       toast(res.isFraud ? `Fraud detected — ${res.score}% risk` : `Clean — ${res.score}% risk`, res.isFraud ? 'error' : 'success');
       onSaved();
     } catch (err) {
-      toast('Scan failed to save to database.', 'error');
       console.error(err);
     } finally {
       setLoading(false);

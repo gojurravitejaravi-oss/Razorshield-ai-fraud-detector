@@ -7,7 +7,7 @@ import { StatCards } from '@/components/StatCards';
 import { FraudChart } from '@/components/FraudChart';
 import { MetricsPanel } from '@/components/MetricsPanel';
 import { computeMetrics, type Metrics } from '@/lib/fraud';
-import { supabase } from '@/lib/supabase';
+import { supabase, dbEnabled } from '@/lib/supabase';
 
 function App() {
   const [rows, setRows] = useState<FlaggedRow[]>([]);
@@ -15,6 +15,7 @@ function App() {
   const [dbCounts, setDbCounts] = useState({ total: 0, fraud: 0 });
 
   const refreshDbCounts = useCallback(async () => {
+    if (!dbEnabled) return;
     try {
       const { count: total } = await supabase.from('transactions').select('*', { count: 'exact', head: true });
       const { count: fraud } = await supabase

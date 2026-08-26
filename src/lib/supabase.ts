@@ -7,6 +7,9 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase env vars (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY)');
 }
 
+// Skip database writes when the project is using a placeholder/dummy Supabase URL.
+export const dbEnabled = !supabaseUrl.includes('dummy.supabase.co');
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: { persistSession: false },
 });
