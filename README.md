@@ -1,3 +1,7 @@
+## 🚀 Live Demo
+**Live Link:** https://razorshield-ai-fraud-detector-xxxx.vercel.app
+**GitHub:** https://github.com/gojurravitejaravi-oss/Razorshield-ai-fraud-detector
+
 # RazorShield - AI Fraud Spike Detector | Razorpay Hackathon Track 02
 
 Live Demo: https://razorshield-ai-fraud-1xcw.bolt.host
