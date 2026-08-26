@@ -1,4 +1,4 @@
-## 🚀 Live Demo: https://razorshield-ai-fraud-ikew.bolt.host
+
 
 # RazorShield - AI Fraud Spike Detector | Razorpay Hackathon Track 02
 
