@@ -50,3 +50,32 @@ RazorShield detects fraud in real-time using AI + Heuristics:
    - Expected: Flagged as Abuse Ring
 
 ### 📁 Project Structure
+Razorshield-ai-fraud-detector/
+│
+├── README.md                 # Live Demo + Docs (You just updated)
+│
+├── frontend/                 # React + Vite UI
+│   ├── src/
+│   │   ├── App.jsx           # Main fraud scan UI
+│   │   ├── components/
+│   │   │   ├── FraudScanner.jsx
+│   │   │   └── RiskCard.jsx
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+│
+├── backend/                  # Python FastAPI
+│   ├── main.py               # API entry point
+│   ├── model/
+│   │   ├── fraud_model.pkl   # Day 38 TF-IDF + Naive Bayes
+│   │   ├── vectorizer.pkl
+│   │   └── thresholds.json
+│   ├── api/
+│   │   └── predict.py        # /predict endpoint
+│   └── requirements.txt
+│
+├── ml/                       # Training scripts
+│   ├── train.py
+│   └── dataset.csv           # Phishing samples
+│
+└── .bolt/                    # Bolt deployment config
